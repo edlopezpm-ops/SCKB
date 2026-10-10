@@ -1,7 +1,42 @@
 (() => {
   "use strict";
 
-  const content = window.SCKB_CONTENT;
+  const lang = window.SCKB_LANG === "en" ? "en" : "es";
+  const labels = {
+    es: {
+      sources: "Fuentes: ", loadError: "No se pudo cargar el atlas. Recarga la página.",
+      decision: "DECISIÓN CLAVE", inputs: "ENTRA", actions: "SE HACE", outputs: "SALE",
+      systems: "SISTEMAS POSIBLES", exceptionOpen: "¿Y si algo falla? +",
+      exceptionClose: "Cerrar desvío −", exceptionTitle: "Desvío / excepción",
+      checkpoint: "Pausa para pensar · ", stage: (number, title) => `Etapa ${number}: ${title}. Abrir detalle.`,
+      layer: "CAPA", inPractice: "EN LA PRÁCTICA", example: "Ejemplo: ",
+      glossaryStatus: (count, total) => `${count} de ${total} términos${count ? "" : " · Prueba otra palabra."}`,
+      allSources: (count) => `Ver todas las fuentes (${count})`,
+      wrongZone: "Esa zona no sigue en esta ruta. Prueba otra o pide una pista.",
+      routeDone: "¡Ruta completada! Ya puedes comparar otro flujo.",
+      routeNext: (step, total) => `Bien. Ahora selecciona la siguiente zona (${step} de ${total}).`,
+      zoneCount: (count, total) => `${count} / ${total} zonas`,
+      routeStart: "Empieza seleccionando la primera zona del plano.",
+      hint: (title) => `Pista: busca «${title}».`
+    },
+    en: {
+      sources: "Sources: ", loadError: "The atlas could not load. Reload the page.",
+      decision: "KEY DECISION", inputs: "INPUTS", actions: "ACTIONS", outputs: "OUTPUTS",
+      systems: "POSSIBLE SYSTEMS", exceptionOpen: "What if something goes wrong? +",
+      exceptionClose: "Close exception −", exceptionTitle: "Detour / exception",
+      checkpoint: "Pause and think · ", stage: (number, title) => `Step ${number}: ${title}. Open details.`,
+      layer: "LAYER", inPractice: "IN PRACTICE", example: "Example: ",
+      glossaryStatus: (count, total) => `${count} of ${total} terms${count ? "" : " · Try another word."}`,
+      allSources: (count) => `View all sources (${count})`,
+      wrongZone: "That zone is not next on this route. Try another or ask for a hint.",
+      routeDone: "Route complete! You can now compare another flow.",
+      routeNext: (step, total) => `Good. Now select the next zone (${step} of ${total}).`,
+      zoneCount: (count, total) => `${count} / ${total} zones`,
+      routeStart: "Start by selecting the first zone on the layout.",
+      hint: (title) => `Hint: look for “${title}”.`
+    }
+  }[lang];
+  const content = lang === "en" ? window.SCKB_CONTENT_EN : window.SCKB_CONTENT;
   const byId = (id) => document.getElementById(id);
   const make = (tag, className, value) => {
     const node = document.createElement(tag);
@@ -19,7 +54,7 @@
       return null;
     }
   };
-  const addSourceLinks = (parent, ids, prefix = "Fuentes: ") => {
+  const addSourceLinks = (parent, ids, prefix = labels.sources) => {
     const valid = (ids || []).filter((id) => safeSource(id));
     if (!valid.length) return;
     const line = make("p", "detail-sources");
@@ -36,7 +71,7 @@
   };
 
   if (!content || !Array.isArray(content.journeys)) {
-    byId("flow-rail").textContent = "No se pudo cargar el atlas. Recarga la página.";
+    byId("flow-rail").textContent = labels.loadError;
     return;
   }
 
@@ -60,6 +95,7 @@
     const url = new URL(window.location.href);
     url.hash = `mapa/${currentJourney.id}/${node.id}`;
     window.history.replaceState(null, "", url);
+    window.dispatchEvent(new Event("sckb:locationchange"));
   };
 
   const listBlock = (title, values) => {
@@ -82,37 +118,37 @@
     primary.append(make("h4", "", node.title));
     primary.append(make("p", "detail-summary", node.summary));
     const decision = make("div", "decision-box");
-    decision.append(make("span", "", "DECISIÓN CLAVE"));
+    decision.append(make("span", "", labels.decision));
     decision.append(make("p", "", node.decision));
     primary.append(decision);
 
     const secondary = make("div", "detail-secondary");
     const columns = make("div", "detail-columns");
-    columns.append(listBlock("ENTRA", node.inputs));
-    columns.append(listBlock("SE HACE", node.actions));
-    columns.append(listBlock("SALE", node.outputs));
+    columns.append(listBlock(labels.inputs, node.inputs));
+    columns.append(listBlock(labels.actions, node.actions));
+    columns.append(listBlock(labels.outputs, node.outputs));
     secondary.append(columns);
 
     const systems = make("div", "detail-system");
-    systems.append(make("h5", "", "SISTEMAS POSIBLES"));
+    systems.append(make("h5", "", labels.systems));
     (node.systems || []).forEach((system) => systems.append(make("span", "system-pill", system)));
     secondary.append(systems);
 
     if (node.exception) {
       const actions = make("div", "detail-actions");
-      const toggle = make("button", "exception-toggle", "¿Y si algo falla? +");
+      const toggle = make("button", "exception-toggle", labels.exceptionOpen);
       toggle.type = "button";
       toggle.setAttribute("aria-expanded", "false");
       toggle.setAttribute("aria-controls", "exception-content");
       const exception = make("div", "exception-panel");
       exception.id = "exception-content";
       exception.hidden = true;
-      exception.append(make("strong", "", "Desvío / excepción"));
+      exception.append(make("strong", "", labels.exceptionTitle));
       exception.append(make("span", "", node.exception));
       toggle.addEventListener("click", () => {
         const expanded = toggle.getAttribute("aria-expanded") === "true";
         toggle.setAttribute("aria-expanded", String(!expanded));
-        toggle.textContent = expanded ? "¿Y si algo falla? +" : "Cerrar desvío −";
+        toggle.textContent = expanded ? labels.exceptionOpen : labels.exceptionClose;
         exception.hidden = expanded;
       });
       actions.append(toggle);
@@ -121,7 +157,7 @@
 
     if (node.checkpoint) {
       const checkpoint = make("div", "checkpoint");
-      checkpoint.append(make("strong", "", "Pausa para pensar · "));
+      checkpoint.append(make("strong", "", labels.checkpoint));
       checkpoint.append(make("span", "", node.checkpoint));
       secondary.append(checkpoint);
     }
@@ -170,7 +206,7 @@
       const button = make("button", "flow-node");
       button.type = "button";
       button.setAttribute("aria-controls", "node-detail");
-      button.setAttribute("aria-label", `Etapa ${index + 1}: ${node.title}. Abrir detalle.`);
+      button.setAttribute("aria-label", labels.stage(index + 1, node.title));
       button.append(make("span", "node-marker", String(index + 1).padStart(2, "0")));
       const card = make("span", "node-card");
       card.append(make("span", "node-tag", node.tag));
@@ -202,6 +238,7 @@
   byId("next-step").addEventListener("click", () => selectStep(currentStep + 1, { scroll: true }));
   const initial = routeHash();
   selectJourney(initial?.journey.id || journeys[0].id, { step: initial?.index || 0, updateHash: Boolean(initial) });
+  if (initial) window.requestAnimationFrame(() => byId("mapa").scrollIntoView({ behavior: "auto", block: "start" }));
   window.addEventListener("hashchange", () => {
     const state = routeHash();
     if (state) selectJourney(state.journey.id, { step: state.index, updateHash: false });
@@ -212,12 +249,12 @@
   const showArchitecture = (index) => {
     const item = content.architecture[index];
     architectureCards.forEach((card, position) => card.setAttribute("aria-expanded", String(index === position)));
-    const kicker = make("span", "detail-kicker", `CAPA ${String(index + 1).padStart(2, "0")} / ${String(content.architecture.length).padStart(2, "0")}`);
+    const kicker = make("span", "detail-kicker", `${labels.layer} ${String(index + 1).padStart(2, "0")} / ${String(content.architecture.length).padStart(2, "0")}`);
     const title = make("h3", "", item.title);
     const subtitle = make("p", "", item.subtitle);
     const description = make("p", "", item.description);
     const example = make("div", "arch-example");
-    example.append(make("strong", "", "EN LA PRÁCTICA"));
+    example.append(make("strong", "", labels.inPractice));
     example.append(make("p", "", item.examples.join(" · ")));
     addSourceLinks(example, item.sourceIds);
     architectureDetail.replaceChildren(kicker, title, subtitle, description, example);
@@ -240,7 +277,7 @@
     detail.append(make("summary", "", item.question));
     const body = make("div", "question-body");
     body.append(make("p", "", item.answer));
-    body.append(make("p", "question-example", `Ejemplo: ${item.example}`));
+    body.append(make("p", "question-example", `${labels.example}${item.example}`));
     addSourceLinks(body, item.sourceIds);
     detail.append(body);
     byId("questions-list").append(detail);
@@ -258,7 +295,7 @@
       return card;
     });
     byId("glossary-grid").replaceChildren(...cards);
-    byId("glossary-status").textContent = `${matches.length} de ${content.glossary.length} términos${matches.length ? "" : " · Prueba otra palabra."}`;
+    byId("glossary-status").textContent = labels.glossaryStatus(matches.length, content.glossary.length);
   };
   glossaryInput.addEventListener("input", renderGlossary);
   document.addEventListener("keydown", (event) => {
@@ -292,7 +329,7 @@
   };
   featuredSourceIds.forEach((id) => { const item = sourceItem(id); if (item) sourceList.append(item); });
   const moreSources = make("details", "more-sources");
-  moreSources.append(make("summary", "", `Ver todas las fuentes (${Object.keys(content.sources).length})`));
+  moreSources.append(make("summary", "", labels.allSources(Object.keys(content.sources).length)));
   const moreGrid = make("div", "more-sources-grid");
   Object.keys(content.sources).filter((id) => !featuredSourceIds.includes(id)).forEach((id) => {
     const item = sourceItem(id);
@@ -325,13 +362,13 @@
         if (zone.id !== expected) {
           button.dataset.wrong = "true";
           window.setTimeout(() => { delete button.dataset.wrong; }, 600);
-          setRouteFeedback("Esa zona no sigue en esta ruta. Prueba otra o pide una pista.", "error");
+          setRouteFeedback(labels.wrongZone, "error");
           return;
         }
         completed += 1;
         updateRoute();
-        if (completed === activeRoute.steps.length) setRouteFeedback("¡Ruta completada! Ya puedes comparar otro flujo.", "success");
-        else setRouteFeedback(`Bien. Ahora selecciona la siguiente zona (${completed + 1} de ${activeRoute.steps.length}).`, "neutral");
+        if (completed === activeRoute.steps.length) setRouteFeedback(labels.routeDone, "success");
+        else setRouteFeedback(labels.routeNext(completed + 1, activeRoute.steps.length), "neutral");
       });
       zoneButtons.set(zone.id, button);
       map.append(button);
@@ -374,7 +411,7 @@
         button.dataset.visited = "true";
         button.append(make("span", "warehouse-zone-step", String(index + 1)));
       });
-      byId("route-count").textContent = `${completed} / ${total} zonas`;
+      byId("route-count").textContent = labels.zoneCount(completed, total);
       byId("route-progress").setAttribute("aria-valuemax", String(total));
       byId("route-progress").setAttribute("aria-valuenow", String(completed));
       byId("route-progress-fill").style.width = `${(completed / total) * 100}%`;
@@ -395,7 +432,7 @@
       addSourceLinks(sourceHolder, route.sourceIds);
       byId("route-note").after(sourceHolder);
       updateRoute();
-      setRouteFeedback("Empieza seleccionando la primera zona del plano.", "neutral");
+      setRouteFeedback(labels.routeStart, "neutral");
     };
 
     layout.routes.forEach((route) => {
@@ -408,7 +445,7 @@
     byId("route-hint").addEventListener("click", () => {
       if (completed >= activeRoute.steps.length) return;
       const zone = layout.zones.find((item) => item.id === activeRoute.steps[completed]);
-      setRouteFeedback(`Pista: busca «${zone.title}».`, "neutral");
+      setRouteFeedback(labels.hint(zone.title), "neutral");
     });
     byId("route-reset").addEventListener("click", () => selectRoute(activeRoute));
     selectRoute(activeRoute);

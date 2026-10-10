@@ -4,6 +4,10 @@ Atlas visual e interactivo para estudiar flujos de cadena de suministro, operaci
 
 **Sitio:** https://edlopezpm-ops.github.io/SCKB/
 
+**English:** https://edlopezpm-ops.github.io/SCKB/?lang=en — el selector ES/EN conserva el nodo del mapa abierto.
+
+[Read this guide in English](README.en.md).
+
 ## Qué incluye
 
 - Tres mapas explorables: cadena completa, WMS y TMS. Cada nodo muestra entradas, acciones, salidas, decisión, excepción y fuentes.
@@ -27,11 +31,11 @@ Los mapas son modelos didácticos. Las decisiones de configuración, instalacion
 
 ## Mantener el atlas
 
-- `content.js`: recorridos, zonas/rutas, arquitectura, glosario, preguntas y bibliografía.
-- `app.js`: navegación accesible, paneles, filtrado y ejercicio de layout.
-- `index.html` y `styles.css`: estructura y presentación.
+- `content.js` y `content.en.js`: recorridos, zonas/rutas, arquitectura, glosario, preguntas y bibliografía en ambos idiomas; conserva los mismos IDs.
+- `app.js`: navegación accesible, paneles, filtrado y ejercicio de layout con etiquetas ES/EN.
+- `index.html`, `i18n.js` y `styles.css`: estructura, textos estáticos, selector de idioma y presentación.
 - `AGENTS.md`: acuerdos editoriales breves para cambios futuros.
 
-Al cambiar una afirmación, actualiza sus `sourceIds`, revisa la fuente primaria y prueba el mapa y el layout. Evita publicar notas de llamadas, datos personales, capturas o materiales de terceros sin permiso y procedencia clara.
+Al cambiar una afirmación, actualiza ambos idiomas y sus `sourceIds`, revisa la fuente primaria y prueba el mapa y el layout en ES/EN. Evita publicar notas de llamadas, datos personales, capturas o materiales de terceros sin permiso y procedencia clara.
 
 GitHub Pages publica la raíz de `main`; `.nojekyll` permite servir los archivos estáticos directamente.

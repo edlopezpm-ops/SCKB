@@ -30,7 +30,7 @@ img, svg { max-width: 100%; }
 .skip-link:focus { top: 12px; }
 
 .site-header { position: relative; z-index: 10; background: rgba(245, 247, 242, .94); border-bottom: 1px solid var(--line); }
-.header-inner { min-height: 86px; display: flex; align-items: center; gap: 36px; }
+.header-inner { min-height: 86px; display: flex; align-items: center; gap: 24px; }
 .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; white-space: nowrap; }
 .brand-mark { position: relative; display: inline-block; width: 36px; height: 36px; border-radius: 12px; background: var(--navy); overflow: hidden; }
 .brand-mark span { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--mint); }
@@ -47,7 +47,12 @@ img, svg { max-width: 100%; }
 .header-nav a { text-decoration: none; color: #3d535e; font-size: .9rem; font-weight: 700; transition: color .2s; }
 .header-nav a:hover, .site-footer a:hover { color: var(--green); }
 .header-cta { background: var(--navy); color: var(--white); padding: 11px 17px; border-radius: 999px; text-decoration: none; font-size: .83rem; font-weight: 800; white-space: nowrap; }
-.header-cta span { color: var(--mint); margin-left: 8px; }
+.header-cta span[aria-hidden="true"] { color: var(--mint); margin-left: 8px; }
+.language-switch { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 3px; padding: 3px; border: 1px solid #cbdad1; border-radius: 999px; background: white; }
+.language-switch a { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: 999px; color: #37544b; font-size: .73rem; font-weight: 900; text-decoration: none; letter-spacing: .04em; }
+.language-switch a:hover { background: #e7f3ec; }
+.language-switch a[aria-current="true"] { background: var(--navy); color: white; }
+.language-switch a[aria-current="true"]:hover { background: #1b4652; }
 
 .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); gap: 60px; align-items: center; padding-block: 98px 116px; }
 .eyebrow, .section-kicker { color: var(--green); font-size: .72rem; letter-spacing: .17em; font-weight: 900; line-height: 1.4; }
@@ -61,7 +66,7 @@ h1 em { color: var(--green); font-family: Georgia, Cambria, serif; font-weight: 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 28px; min-height: 50px; padding: 13px 20px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: .9rem; }
 .button-primary { background: var(--navy); color: white; box-shadow: 0 10px 20px rgba(16,35,51,.13); }
-.button-primary span { color: var(--mint); }
+.button-primary span[aria-hidden="true"] { color: var(--mint); }
 .button-primary:hover, .header-cta:hover { background: #1b4652; }
 .button-quiet { border: 1px solid #c9d7d0; color: var(--ink); }
 .button-quiet:hover { border-color: var(--green); color: var(--green); }
@@ -325,10 +330,15 @@ h1 em { color: var(--green); font-family: Georgia, Cambria, serif; font-weight: 
   .architecture-detail { min-height: 250px; }
 }
 
+@media (max-width: 900px) {
+  .header-cta { display: none; }
+  .header-nav { min-width: 0; overflow-x: auto; white-space: nowrap; }
+}
+
 @media (max-width: 800px) {
   .shell { width: min(100% - 38px, 1240px); }
   .header-inner { gap: 15px; min-height: 75px; }
-  .header-nav { gap: 15px; }
+  .header-nav { gap: 15px; min-width: 0; overflow-x: auto; white-space: nowrap; }
   .header-nav a { font-size: .75rem; }
   .header-cta { display: none; }
   .hero { grid-template-columns: 1fr; padding-block: 65px 80px; }
@@ -351,9 +361,10 @@ h1 em { color: var(--green); font-family: Georgia, Cambria, serif; font-weight: 
 
 @media (max-width: 580px) {
   .shell { width: min(100% - 28px, 1240px); }
-  .header-inner { flex-wrap: wrap; gap: 0; padding-top: 13px; }
-  .brand { width: 100%; }
-  .header-nav { justify-content: flex-start; width: 100%; gap: 18px; margin-left: 0; overflow-x: auto; min-height: 45px; white-space: nowrap; }
+  .header-inner { flex-wrap: wrap; gap: 0; padding-top: 9px; }
+  .brand { order: 1; flex: 1 1 auto; min-width: 0; }
+  .language-switch { order: 2; margin-left: auto; }
+  .header-nav { order: 3; justify-content: flex-start; width: 100%; flex-basis: 100%; gap: 18px; margin-left: 0; overflow-x: auto; min-height: 48px; white-space: nowrap; }
   h1 { font-size: clamp(3.25rem, 14vw, 5rem); }
   .hero { padding-block: 48px 65px; }
   .hero-lede { font-size: .99rem; }

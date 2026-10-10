@@ -4,73 +4,79 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#101f2d">
-    <meta name="description" content="Un atlas interactivo, visual y agnóstico para entender la cadena de suministro, el WMS, el TMS y los sistemas que los conectan.">
-    <title>SCKB · Supply Chain Knowledge Base</title>
+    <meta name="description" content="Un atlas interactivo, visual y agnóstico para entender la cadena de suministro, el WMS, el TMS y los sistemas que los conectan." data-i18n-content="meta.description">
+    <title data-i18n="page.title">SCKB · Atlas de la cadena de suministro</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./styles.css">
     <script defer src="./content.js"></script>
+    <script defer src="./content.en.js"></script>
+    <script defer src="./i18n.js"></script>
     <script defer src="./app.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Ir al contenido</a>
+    <a class="skip-link" href="#main" data-i18n="skip">Ir al contenido</a>
 
     <header class="site-header">
       <div class="shell header-inner">
-        <a class="brand" href="#inicio" aria-label="SCKB, volver al inicio">
+        <a class="brand" href="#inicio" aria-label="SCKB, volver al inicio" data-i18n-aria-label="brand.home">
           <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
           <span class="brand-name">SCKB<span class="brand-dot">.</span></span>
           <span class="brand-caption">Supply Chain Knowledge Base</span>
         </a>
-        <nav class="header-nav" aria-label="Navegación principal">
-          <a href="#mapa">Mapa</a>
-          <a href="#layout">Layout</a>
-          <a href="#sistemas">Sistemas</a>
-          <a href="#arquitectura">Arquitectura</a>
-          <a href="#preguntas">Preguntas</a>
+        <nav class="header-nav" aria-label="Navegación principal" data-i18n-aria-label="nav.main">
+          <a href="#mapa" data-i18n="nav.map">Mapa</a>
+          <a href="#layout" data-i18n="nav.layout">Layout</a>
+          <a href="#sistemas" data-i18n="nav.systems">Sistemas</a>
+          <a href="#arquitectura" data-i18n="nav.architecture">Arquitectura</a>
+          <a href="#preguntas" data-i18n="nav.questions">Preguntas</a>
         </nav>
-        <a class="header-cta" href="#mapa">Explorar <span aria-hidden="true">↗</span></a>
+        <a class="header-cta" href="#mapa"><span data-i18n="nav.explore">Explorar</span> <span aria-hidden="true">↗</span></a>
+        <nav class="language-switch" aria-label="Idioma del sitio" data-i18n-aria-label="language.group">
+          <a href="?lang=es" data-lang-target="es" lang="es" hreflang="es" aria-label="Español">ES</a>
+          <a href="?lang=en" data-lang-target="en" lang="en" hreflang="en" aria-label="English">EN</a>
+        </nav>
       </div>
     </header>
 
     <main id="main">
       <section class="hero shell" id="inicio" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> ATLAS INTERACTIVO · EDICIÓN 01</p>
-          <h1 id="hero-title">Una cadena.<br><em>Muchas decisiones.</em></h1>
-          <p class="hero-lede">Sigue un pedido ficticio desde la necesidad inicial hasta la entrega. Abre cada nodo para descubrir qué mueve el producto, qué información viaja y dónde intervienen un WMS o un TMS.</p>
+          <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="hero.eyebrow">ATLAS INTERACTIVO · EDICIÓN 01</span></p>
+          <h1 id="hero-title"><span data-i18n="hero.line1">Una cadena.</span><br><em data-i18n="hero.line2">Muchas decisiones.</em></h1>
+          <p class="hero-lede" data-i18n="hero.lede">Sigue un pedido ficticio desde la necesidad inicial hasta la entrega. Abre cada nodo para descubrir qué mueve el producto, qué información viaja y dónde intervienen un WMS o un TMS.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#mapa">Empezar el recorrido <span aria-hidden="true">→</span></a>
-            <a class="button button-quiet" href="#como-usar">Cómo usar el atlas <span aria-hidden="true">↘</span></a>
+            <a class="button button-primary" href="#mapa"><span data-i18n="hero.start">Empezar el recorrido</span> <span aria-hidden="true">→</span></a>
+            <a class="button button-quiet" href="#como-usar"><span data-i18n="hero.how">Cómo usar el atlas</span> <span aria-hidden="true">↘</span></a>
           </div>
-          <div class="hero-metrics" aria-label="Contenido del atlas">
-            <div><strong>04</strong><span>módulos interactivos</span></div>
-            <div><strong>+20</strong><span>nodos explorables</span></div>
-            <div><strong>01</strong><span>lenguaje claro</span></div>
+          <div class="hero-metrics" aria-label="Contenido del atlas" data-i18n-aria-label="hero.metricsLabel">
+            <div><strong>04</strong><span data-i18n="hero.modules">módulos interactivos</span></div>
+            <div><strong>+20</strong><span data-i18n="hero.nodes">nodos explorables</span></div>
+            <div><strong>01</strong><span data-i18n="hero.plainLanguage">lenguaje claro</span></div>
           </div>
         </div>
         <div class="hero-art" aria-hidden="true">
-          <div class="art-header"><span>VISIÓN DE SISTEMA</span><span>FIG. 01 / 03</span></div>
+          <div class="art-header"><span data-i18n="art.systemView">VISIÓN DE SISTEMA</span><span>FIG. 01 / 03</span></div>
           <div class="art-orbit art-orbit-a"></div>
           <div class="art-orbit art-orbit-b"></div>
-          <div class="art-core"><span class="art-core-mini">DEMANDA</span><strong>Flujo<br>completo</strong><span class="art-core-arrow">↗</span></div>
-          <div class="art-satellite satellite-source"><span>01</span><strong>Abastecer</strong></div>
-          <div class="art-satellite satellite-store"><span>02</span><strong>Almacenar</strong></div>
-          <div class="art-satellite satellite-move"><span>03</span><strong>Transportar</strong></div>
-          <div class="art-satellite satellite-return"><span>04</span><strong>Retornar</strong></div>
-          <div class="art-footer"><span>PRODUCTO</span><i></i><span>DATOS</span><i></i><span>DECISIONES</span></div>
+          <div class="art-core"><span class="art-core-mini" data-i18n="art.demand">DEMANDA</span><strong><span data-i18n="art.flowLine1">Flujo</span><br><span data-i18n="art.flowLine2">completo</span></strong><span class="art-core-arrow">↗</span></div>
+          <div class="art-satellite satellite-source"><span>01</span><strong data-i18n="art.source">Abastecer</strong></div>
+          <div class="art-satellite satellite-store"><span>02</span><strong data-i18n="art.store">Almacenar</strong></div>
+          <div class="art-satellite satellite-move"><span>03</span><strong data-i18n="art.move">Transportar</strong></div>
+          <div class="art-satellite satellite-return"><span>04</span><strong data-i18n="art.return">Retornar</strong></div>
+          <div class="art-footer"><span data-i18n="art.goods">PRODUCTO</span><i></i><span data-i18n="art.data">DATOS</span><i></i><span data-i18n="art.decisions">DECISIONES</span></div>
         </div>
       </section>
 
       <section class="orientation" id="como-usar" aria-labelledby="orientation-title">
         <div class="shell orientation-inner">
           <div>
-            <p class="section-kicker">ANTES DE ENTRAR</p>
-            <h2 id="orientation-title">Tres lentes para ver el mismo pedido.</h2>
+            <p class="section-kicker" data-i18n="orientation.kicker">ANTES DE ENTRAR</p>
+            <h2 id="orientation-title" data-i18n="orientation.title">Tres lentes para ver el mismo pedido.</h2>
           </div>
           <div class="orientation-lenses">
-            <div class="lens"><span class="lens-symbol goods" aria-hidden="true">■</span><div><strong>Bienes</strong><p>¿Dónde está físicamente?</p></div></div>
-            <div class="lens"><span class="lens-symbol signals" aria-hidden="true">⌁</span><div><strong>Señales</strong><p>¿Qué sabe cada sistema?</p></div></div>
-            <div class="lens"><span class="lens-symbol decisions" aria-hidden="true">◇</span><div><strong>Decisiones</strong><p>¿Qué pasa si algo cambia?</p></div></div>
+            <div class="lens"><span class="lens-symbol goods" aria-hidden="true">■</span><div><strong data-i18n="orientation.goods">Bienes</strong><p data-i18n="orientation.goodsQuestion">¿Dónde está físicamente?</p></div></div>
+            <div class="lens"><span class="lens-symbol signals" aria-hidden="true">⌁</span><div><strong data-i18n="orientation.signals">Señales</strong><p data-i18n="orientation.signalsQuestion">¿Qué sabe cada sistema?</p></div></div>
+            <div class="lens"><span class="lens-symbol decisions" aria-hidden="true">◇</span><div><strong data-i18n="orientation.decisions">Decisiones</strong><p data-i18n="orientation.decisionsQuestion">¿Qué pasa si algo cambia?</p></div></div>
           </div>
         </div>
       </section>
@@ -78,18 +84,18 @@
       <section class="section explorer shell" id="mapa" aria-labelledby="map-title">
         <div class="section-heading">
           <div>
-            <p class="section-kicker">01 / MAPAS DE FLUJO</p>
-            <h2 id="map-title">Aprende siguiendo el movimiento.</h2>
-            <p>Elige una escala: la cadena completa, el interior del almacén o el viaje de transporte.</p>
+            <p class="section-kicker" data-i18n="flow.kicker">01 / MAPAS DE FLUJO</p>
+            <h2 id="map-title" data-i18n="flow.title">Aprende siguiendo el movimiento.</h2>
+            <p data-i18n="flow.intro">Elige una escala: la cadena completa, el interior del almacén o el viaje de transporte.</p>
           </div>
-          <div class="heading-annotation">Haz clic en cualquier estación<br>para abrir su decisión clave <span aria-hidden="true">↙</span></div>
+          <div class="heading-annotation"><span data-i18n="flow.annotationLine1">Haz clic en cualquier estación</span><br><span data-i18n="flow.annotationLine2">para abrir su decisión clave</span> <span aria-hidden="true">↙</span></div>
         </div>
 
         <div class="explorer-frame">
-          <div class="journey-tabs" role="tablist" aria-label="Escala del mapa">
-            <button class="journey-tab" type="button" role="tab" id="tab-network" aria-controls="journey-panel" data-journey="network"><span>01</span> Cadena completa</button>
-            <button class="journey-tab" type="button" role="tab" id="tab-wms" aria-controls="journey-panel" data-journey="wms"><span>02</span> Dentro del WMS</button>
-            <button class="journey-tab" type="button" role="tab" id="tab-tms" aria-controls="journey-panel" data-journey="tms"><span>03</span> Viaje del TMS</button>
+          <div class="journey-tabs" role="tablist" aria-label="Escala del mapa" data-i18n-aria-label="flow.tablistLabel">
+            <button class="journey-tab" type="button" role="tab" id="tab-network" aria-controls="journey-panel" data-journey="network"><span>01</span> <span data-i18n="flow.tabNetwork">Cadena completa</span></button>
+            <button class="journey-tab" type="button" role="tab" id="tab-wms" aria-controls="journey-panel" data-journey="wms"><span>02</span> <span data-i18n="flow.tabWms">Dentro del WMS</span></button>
+            <button class="journey-tab" type="button" role="tab" id="tab-tms" aria-controls="journey-panel" data-journey="tms"><span>03</span> <span data-i18n="flow.tabTms">Viaje del TMS</span></button>
           </div>
           <div class="journey-panel" role="tabpanel" id="journey-panel" aria-labelledby="tab-network">
             <div class="journey-intro">
@@ -97,39 +103,39 @@
               <p class="journey-scope" id="journey-scope"></p>
             </div>
             <div class="flow-toolbar">
-              <div class="progress-wrap"><span id="step-counter">01 / 07</span><div class="progress-track" role="progressbar" id="flow-progress" aria-label="Progreso del recorrido" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1"><span id="progress-fill"></span></div></div>
-              <div class="flow-toolbar-note"><span class="pulse-dot"></span> CADA NODO ABRE UN DETALLE</div>
+              <div class="progress-wrap"><span id="step-counter">01 / 07</span><div class="progress-track" role="progressbar" id="flow-progress" aria-label="Progreso del recorrido" data-i18n-aria-label="flow.progressLabel" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1"><span id="progress-fill"></span></div></div>
+              <div class="flow-toolbar-note"><span class="pulse-dot"></span><span data-i18n="flow.nodeNote">CADA NODO ABRE UN DETALLE</span></div>
             </div>
-            <div class="flow-viewport" id="flow-viewport" tabindex="0" aria-label="Mapa horizontal de etapas. Desliza o usa Tab para recorrer los nodos.">
+            <div class="flow-viewport" id="flow-viewport" tabindex="0" aria-label="Mapa horizontal de etapas. Desliza o usa Tab para recorrer los nodos." data-i18n-aria-label="flow.viewportLabel">
               <div class="flow-rail" id="flow-rail"></div>
             </div>
-            <div class="flow-bottom"><span>← DESLIZA PARA EXPLORAR →</span><div class="step-controls"><button type="button" class="step-button" id="prev-step" aria-label="Etapa anterior">←</button><button type="button" class="step-button" id="next-step" aria-label="Etapa siguiente">→</button></div></div>
+            <div class="flow-bottom"><span data-i18n="flow.swipe">← DESLIZA PARA EXPLORAR →</span><div class="step-controls"><button type="button" class="step-button" id="prev-step" aria-label="Etapa anterior" data-i18n-aria-label="flow.previous">←</button><button type="button" class="step-button" id="next-step" aria-label="Etapa siguiente" data-i18n-aria-label="flow.next">→</button></div></div>
             <article class="node-detail" id="node-detail" aria-live="polite" aria-atomic="true"></article>
           </div>
         </div>
-        <p class="model-note"><strong>Modelo didáctico:</strong> el ejemplo de las lámparas es ficticio. Las secuencias y documentos reales cambian según producto, red, contrato y configuración.</p>
+        <p class="model-note"><strong data-i18n="flow.modelLead">Modelo didáctico:</strong> <span data-i18n="flow.modelBody">el ejemplo de las lámparas es ficticio. Las secuencias y documentos reales cambian según producto, red, contrato y configuración.</span></p>
       </section>
 
       <section class="section warehouse-section" id="layout" aria-labelledby="layout-title">
         <div class="shell">
           <div class="section-heading">
-            <div><p class="section-kicker">02 / LAYOUT DE ALMACÉN</p><h2 id="layout-title">Ahora, camina el flujo.</h2><p>Selecciona una ruta y toca las zonas en el orden en que viajaría el producto. El camino aparece mientras avanzas.</p></div>
-            <div class="heading-annotation">UN PLANO DIDÁCTICO<br>NO UN DISEÑO DE INGENIERÍA</div>
+            <div><p class="section-kicker" data-i18n="layout.kicker">02 / LAYOUT DE ALMACÉN</p><h2 id="layout-title" data-i18n="layout.title">Ahora, camina el flujo.</h2><p data-i18n="layout.intro">Selecciona una ruta y toca las zonas en el orden en que viajaría el producto. El camino aparece mientras avanzas.</p></div>
+            <div class="heading-annotation"><span data-i18n="layout.annotationLine1">UN PLANO DIDÁCTICO</span><br><span data-i18n="layout.annotationLine2">NO UN DISEÑO DE INGENIERÍA</span></div>
           </div>
           <div class="warehouse-frame">
             <div class="warehouse-side">
-              <p class="warehouse-kicker">ELIGE TU MISIÓN</p>
-              <div class="route-picker" id="route-picker" role="group" aria-label="Rutas del almacén"></div>
+              <p class="warehouse-kicker" data-i18n="layout.mission">ELIGE TU MISIÓN</p>
+              <div class="route-picker" id="route-picker" role="group" aria-label="Rutas del almacén" data-i18n-aria-label="layout.routesLabel"></div>
               <div class="route-brief"><strong id="route-title"></strong><p id="route-goal"></p><p class="route-note" id="route-note"></p></div>
-              <div class="route-progress"><span id="route-count">0 / 0 zonas</span><div class="progress-track" role="progressbar" id="route-progress" aria-label="Progreso de la ruta" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0"><span id="route-progress-fill"></span></div></div>
+              <div class="route-progress"><span id="route-count" data-i18n="layout.initialCount">0 / 0 zonas</span><div class="progress-track" role="progressbar" id="route-progress" aria-label="Progreso de la ruta" data-i18n-aria-label="layout.progressLabel" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0"><span id="route-progress-fill"></span></div></div>
               <p class="route-feedback" id="route-feedback" aria-live="polite"></p>
-              <div class="route-actions"><button type="button" id="route-hint">Pista</button><button type="button" id="route-reset">Reiniciar ↺</button></div>
+              <div class="route-actions"><button type="button" id="route-hint" data-i18n="layout.hint">Pista</button><button type="button" id="route-reset" data-i18n="layout.reset">Reiniciar ↺</button></div>
             </div>
             <div class="warehouse-canvas-wrap">
-              <p class="warehouse-swipe">Desliza el plano hacia la derecha para ver todas las zonas →</p>
-              <div class="warehouse-labels"><span>ANDÉN DE ENTRADA</span><span>ÁREA DE OPERACIÓN</span><span>ANDÉN DE SALIDA</span></div>
-              <div class="warehouse-map" id="warehouse-map" aria-label="Plano interactivo de zonas de un almacén"><svg class="warehouse-path" id="warehouse-path" aria-hidden="true"></svg></div>
-              <div class="warehouse-legend"><span><i class="legend-ready"></i> Zona disponible</span><span><i class="legend-done"></i> Paso completado</span><span>Las rutas varían según instalación</span></div>
+              <p class="warehouse-swipe" data-i18n="layout.swipe">Desliza el plano hacia la derecha para ver todas las zonas →</p>
+              <div class="warehouse-labels"><span data-i18n="layout.inboundDock">ANDÉN DE ENTRADA</span><span data-i18n="layout.operations">ÁREA DE OPERACIÓN</span><span data-i18n="layout.outboundDock">ANDÉN DE SALIDA</span></div>
+              <div class="warehouse-map" id="warehouse-map" aria-label="Plano interactivo de zonas de un almacén" data-i18n-aria-label="layout.mapLabel"><svg class="warehouse-path" id="warehouse-path" aria-hidden="true"></svg></div>
+              <div class="warehouse-legend"><span><i class="legend-ready"></i><span data-i18n="layout.available">Zona disponible</span></span><span><i class="legend-done"></i><span data-i18n="layout.completed">Paso completado</span></span><span data-i18n="layout.varies">Las rutas varían según instalación</span></div>
             </div>
           </div>
           <p class="model-note" id="layout-intro"></p>
@@ -139,23 +145,23 @@
       <section class="section handoff-band" id="sistemas" aria-labelledby="handoff-title">
         <div class="shell">
           <div class="section-heading section-heading-light">
-            <div><p class="section-kicker">03 / EL TRASPASO</p><h2 id="handoff-title">Ningún sistema trabaja solo.</h2><p>La ejecución cambia de manos, pero el pedido conserva su contexto.</p></div>
+            <div><p class="section-kicker" data-i18n="handoff.kicker">03 / EL TRASPASO</p><h2 id="handoff-title" data-i18n="handoff.title">Ningún sistema trabaja solo.</h2><p data-i18n="handoff.intro">La ejecución cambia de manos, pero el pedido conserva su contexto.</p></div>
           </div>
-          <div class="handoff-flow" aria-label="Ejemplo de traspasos entre sistemas">
-            <div class="handoff-card"><span class="handoff-index">01 · PROMESA</span><strong>OMS / ERP</strong><p>Pedido, disponibilidad, compra y compromiso.</p><small>señal: orden</small></div>
+          <div class="handoff-flow" aria-label="Ejemplo de traspasos entre sistemas" data-i18n-aria-label="handoff.flowLabel">
+            <div class="handoff-card"><span class="handoff-index" data-i18n="handoff.promise">01 · PROMESA</span><strong>OMS / ERP</strong><p data-i18n="handoff.promiseBody">Pedido, disponibilidad, compra y compromiso.</p><small data-i18n="handoff.promiseSignal">señal: orden</small></div>
             <span class="handoff-arrow" aria-hidden="true">→</span>
-            <div class="handoff-card"><span class="handoff-index">02 · EJECUCIÓN</span><strong>WMS</strong><p>Inventario, tareas, picking, empaque y salida.</p><small>señal: listo para despachar</small></div>
+            <div class="handoff-card"><span class="handoff-index" data-i18n="handoff.execution">02 · EJECUCIÓN</span><strong>WMS</strong><p data-i18n="handoff.executionBody">Inventario, tareas, picking, empaque y salida.</p><small data-i18n="handoff.executionSignal">señal: listo para despachar</small></div>
             <span class="handoff-arrow" aria-hidden="true">→</span>
-            <div class="handoff-card"><span class="handoff-index">03 · MOVIMIENTO</span><strong>TMS</strong><p>Carga, transportista, seguimiento y entrega.</p><small>señal: estado / prueba de entrega</small></div>
+            <div class="handoff-card"><span class="handoff-index" data-i18n="handoff.movement">03 · MOVIMIENTO</span><strong>TMS</strong><p data-i18n="handoff.movementBody">Carga, transportista, seguimiento y entrega.</p><small data-i18n="handoff.movementSignal">señal: estado / prueba de entrega</small></div>
           </div>
-          <p class="handoff-footnote">Estas fronteras son un patrón de referencia. En una implementación concreta, algunas funciones pueden vivir en otro sistema o integrarse de otra manera.</p>
+          <p class="handoff-footnote" data-i18n="handoff.footnote">Estas fronteras son un patrón de referencia. En una implementación concreta, algunas funciones pueden vivir en otro sistema o integrarse de otra manera.</p>
         </div>
       </section>
 
       <section class="section architecture shell" id="arquitectura" aria-labelledby="architecture-title">
         <div class="section-heading">
-          <div><p class="section-kicker">04 / ARQUITECTURA CLÁSICA</p><h2 id="architecture-title">Del escáner a la decisión.</h2><p>Explora las capas que suelen conectar operación, aplicaciones, datos e infraestructura.</p></div>
-          <div class="heading-annotation">UNA ARQUITECTURA DE REFERENCIA<br>NO UN DISEÑO OBLIGATORIO</div>
+          <div><p class="section-kicker" data-i18n="architecture.kicker">04 / ARQUITECTURA CLÁSICA</p><h2 id="architecture-title" data-i18n="architecture.title">Del escáner a la decisión.</h2><p data-i18n="architecture.intro">Explora las capas que suelen conectar operación, aplicaciones, datos e infraestructura.</p></div>
+          <div class="heading-annotation"><span data-i18n="architecture.annotationLine1">UNA ARQUITECTURA DE REFERENCIA</span><br><span data-i18n="architecture.annotationLine2">NO UN DISEÑO OBLIGATORIO</span></div>
         </div>
         <div class="architecture-layout">
           <div class="architecture-grid" id="architecture-grid"></div>
@@ -163,21 +169,21 @@
         </div>
         <div class="deployment-note">
           <div class="deployment-icon" aria-hidden="true">↔</div>
-          <div><strong>¿On-prem o SaaS?</strong><p>Es una decisión de operación y contrato: propiedad de la infraestructura, ciclos de cambio, integraciones, seguridad, respaldo y recuperación requieren responsables claros en ambos modelos. El flujo de negocio no cambia por el lugar donde corre el software.</p></div>
+          <div><strong data-i18n="architecture.deploymentTitle">¿On-prem o SaaS?</strong><p data-i18n="architecture.deploymentBody">Es una decisión de operación y contrato: propiedad de la infraestructura, ciclos de cambio, integraciones, seguridad, respaldo y recuperación requieren responsables claros en ambos modelos. El flujo de negocio no cambia por el lugar donde corre el software.</p></div>
         </div>
       </section>
 
       <section class="section questions-section" id="preguntas" aria-labelledby="questions-title">
         <div class="shell questions-layout">
-          <div class="questions-intro"><p class="section-kicker">05 / PREGUNTAS REALES</p><h2 id="questions-title">La parte humana del stack.</h2><p>Las preguntas que suelen aparecer cuando alguien entra por primera vez a supply chain systems, respondidas sin depender de una marca.</p><span class="questions-mark" aria-hidden="true">?</span></div>
+          <div class="questions-intro"><p class="section-kicker" data-i18n="questions.kicker">05 / PREGUNTAS REALES</p><h2 id="questions-title" data-i18n="questions.title">La parte humana del stack.</h2><p data-i18n="questions.intro">Las preguntas que suelen aparecer cuando alguien entra por primera vez a supply chain systems, respondidas sin depender de una marca.</p><span class="questions-mark" aria-hidden="true">?</span></div>
           <div class="questions-list" id="questions-list"></div>
         </div>
       </section>
 
       <section class="section glossary shell" id="glosario" aria-labelledby="glossary-title">
         <div class="section-heading">
-          <div><p class="section-kicker">06 / VOCABULARIO</p><h2 id="glossary-title">Hablar el idioma de la operación.</h2><p>Definiciones breves para volver al mapa con más claridad.</p></div>
-          <div class="glossary-search"><label for="glossary-query">Filtrar términos</label><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="glossary-query" type="search" placeholder="Ej. ASN, inventario, ETA" autocomplete="off"><kbd>/</kbd></div></div>
+          <div><p class="section-kicker" data-i18n="glossary.kicker">06 / VOCABULARIO</p><h2 id="glossary-title" data-i18n="glossary.title">Hablar el idioma de la operación.</h2><p data-i18n="glossary.intro">Definiciones breves para volver al mapa con más claridad.</p></div>
+          <div class="glossary-search"><label for="glossary-query" data-i18n="glossary.filter">Filtrar términos</label><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="glossary-query" type="search" placeholder="Ej. ASN, inventario, ETA" data-i18n-placeholder="glossary.placeholder" autocomplete="off"><kbd>/</kbd></div></div>
         </div>
         <p class="search-status" id="glossary-status" aria-live="polite"></p>
         <div class="glossary-grid" id="glossary-grid"></div>
@@ -185,13 +191,13 @@
 
       <section class="section sources-band" id="fuentes" aria-labelledby="sources-title">
         <div class="shell sources-layout">
-          <div><p class="section-kicker">TRAZABILIDAD</p><h2 id="sources-title">De dónde sale cada idea.</h2><p>El atlas nace de preguntas de una conversación de aprendizaje. El diálogo original permanece privado. Los flujos detallados se contrastaron con referencias públicas de la industria; los diagramas son síntesis didácticas.</p></div>
+          <div><p class="section-kicker" data-i18n="sources.kicker">TRAZABILIDAD</p><h2 id="sources-title" data-i18n="sources.title">De dónde sale cada idea.</h2><p data-i18n="sources.intro">El atlas nace de preguntas de una conversación de aprendizaje. El diálogo original permanece privado. Los flujos detallados se contrastaron con referencias públicas de la industria; los diagramas son síntesis didácticas.</p></div>
           <div class="source-list" id="source-list"></div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer"><div class="shell footer-inner"><div><span class="footer-brand">SCKB<span>.</span></span><p>Supply Chain Knowledge Base · Aprender el sistema completo.</p></div><div><a href="#inicio">Volver arriba ↑</a><a href="https://github.com/edlopezpm-ops/SCKB" target="_blank" rel="noopener noreferrer">Ver código ↗</a></div></div></footer>
-    <noscript><p class="noscript">Activa JavaScript para explorar los mapas y las tarjetas interactivas.</p></noscript>
+    <footer class="site-footer"><div class="shell footer-inner"><div><span class="footer-brand">SCKB<span>.</span></span><p data-i18n="footer.tagline">Supply Chain Knowledge Base · Aprender el sistema completo.</p></div><div><a href="#inicio" data-i18n="footer.back">Volver arriba ↑</a><a href="https://github.com/edlopezpm-ops/SCKB" target="_blank" rel="noopener noreferrer" data-i18n="footer.code">Ver código ↗</a></div></div></footer>
+    <noscript><p class="noscript">Activa JavaScript para explorar los mapas y las tarjetas interactivas. / Enable JavaScript to explore the interactive maps and cards.</p></noscript>
   </body>
 </html>
