@@ -37,6 +37,26 @@ window.SCKB_CONTENT = {
       url: "https://www.gs1.org/standards/gs1-logistic-label-guideline/1-3",
       scope: "Relación entre aviso de despacho, etiqueta SSCC, recibo y confirmación física."
     },
+    gs1Delivery: {
+      label: "GS1 · Standards for Delivery Management",
+      url: "https://www.gs1.org/docs/tl/GS1Standards_DeliveryManagement.pdf",
+      scope: "Alineación de datos maestros, aviso de despacho/ASN y comparación con lo realmente recibido."
+    },
+    x856: {
+      label: "X12 · 856 Ship Notice/Manifest",
+      url: "https://x12.org/node/4398",
+      scope: "Ejemplo EDI de contenido y estructura de una notificación anticipada de embarque."
+    },
+    oracleAutomation: {
+      label: "Oracle · Warehouse automation flows",
+      url: "https://docs.oracle.com/en/cloud/saas/warehouse-management/26a/owmol/wms-apis-that-support-mhe-configuration.html",
+      scope: "Ejemplo de mensajes WMS↔MHE para ola, desvío, confirmación física y distribución; no especificación de SCALE."
+    },
+    usBol: {
+      label: "U.S. Customs and Border Protection · Bill of Lading",
+      url: "https://www.help.cbp.gov/s/article/Article-1216?language=en_US",
+      scope: "Ejemplo estadounidense del propósito y campos de un BOL; obligaciones y formato dependen del transporte y jurisdicción."
+    },
     gs1Keys: {
       label: "GS1 · Identification Keys",
       url: "https://www.gs1.org/standards/id-keys",
@@ -49,8 +69,8 @@ window.SCKB_CONTENT = {
     },
     epcis: {
       label: "GS1 · EPCIS y CBV",
-      url: "https://www.gs1.org/standards/epcis",
-      scope: "Eventos de visibilidad: qué, cuándo, dónde, por qué y cómo."
+      url: "https://ref.gs1.org/guidelines/epcis-cbv/",
+      scope: "Eventos de visibilidad y agregación padre-hijo, como cartones dentro de un pallet."
     },
     x940: {
       label: "X12 · 940 Warehouse Shipping Order",
@@ -118,8 +138,8 @@ window.SCKB_CONTENT = {
     {
       id: "network",
       title: "La cadena completa",
-      eyebrow: "01 · Del pronóstico al retorno",
-      lede: "Sigue un pedido ficticio de 12 lámparas. En cada tramo viajan producto, información y compromisos económicos.",
+      eyebrow: "01 · Proceso general",
+      lede: "Un pedido de 12 lámparas conecta abastecimiento, almacén, transporte y devoluciones.",
       scope: "SCOR describe capacidades, no una secuencia obligatoria. Una distribuidora puede omitir Transform; los sistemas y responsables varían.",
       nodes: [
         {
@@ -144,7 +164,7 @@ window.SCKB_CONTENT = {
           inputs: ["Pedido del cliente", "Disponibilidad y reglas comerciales"],
           actions: ["Validar datos", "Confirmar o renegociar la promesa"],
           outputs: ["Pedido aceptado", "Fecha y destino comprometidos"],
-          decision: "¿Hay 12 unidades disponibles para prometer, aunque estén físicamente en stock?",
+          decision: "¿Cuántas unidades están libres de reservas o bloqueos?",
           exception: "Una unidad reservada o retenida no debe prometerse otra vez.",
           systems: ["OMS o capa de fulfillment", "ERP"],
           sourceIds: ["scor", "gs1Systems"],
@@ -239,9 +259,9 @@ window.SCKB_CONTENT = {
     {
       id: "wms",
       title: "Dentro del almacén · WMS",
-      eyebrow: "02 · Del muelle de entrada al de salida",
+      eyebrow: "02 · Operación de almacén",
       lede: "El WMS dirige movimientos y registra dónde está cada unidad elegible. La mercancía anunciada aún no es mercancía recibida.",
-      scope: "Flujo típico, adaptable a tamaño y sector. Una operación puede combinar pasos, usar papel o automatización, y repartir funciones entre sistemas.",
+      scope: "Recibo, inventario y salida; los controles y sistemas varían por operación.",
       nodes: [
         {
           id: "wms-prep",
@@ -336,7 +356,7 @@ window.SCKB_CONTENT = {
           actions: ["Ir a ubicación", "Tomar", "Escanear y confirmar"],
           outputs: ["12 unidades preparadas o faltante explícito"],
           decision: "¿Coinciden producto y cantidad con la tarea?",
-          exception: "Un pick short nunca debe convertirse en confirmación de 12 sin evidencia física.",
+          exception: "Un faltante en picking no se confirma como 12 unidades sin evidencia física.",
           systems: ["WMS", "Terminal RF"],
           sourceIds: ["gs1Systems", "cltd"],
           checkpoint: "¿Qué se debe registrar si solo se encuentran 11?"
@@ -374,9 +394,9 @@ window.SCKB_CONTENT = {
     {
       id: "tms",
       title: "Entre ubicaciones · TMS",
-      eyebrow: "03 · De la carga a la prueba de entrega",
+      eyebrow: "03 · Transporte",
       lede: "El TMS organiza el traslado de las 12 lámparas: costo, capacidad, servicio, estado y liquidación.",
-      scope: "El ejemplo usa transporte por carretera. La selección de modo, documentos y mensajes cambian en parcel, marítimo, ferroviario o aéreo.",
+      scope: "El ejemplo usa carretera. Documentos y mensajes cambian en paquetería, marítimo, ferrocarril o aéreo.",
       nodes: [
         {
           id: "tms-demand",
@@ -415,7 +435,7 @@ window.SCKB_CONTENT = {
           actions: ["Enviar oferta", "Registrar aceptación o rechazo", "Reasignar si hace falta"],
           outputs: ["Transportista y capacidad confirmados"],
           decision: "¿Aceptó el transportista en tiempo y condiciones?",
-          exception: "Un tender rechazado vuelve a selección sin fingir que la carga ya tiene vehículo.",
+          exception: "Si se rechaza la oferta de carga, se busca otro transportista; aún no hay vehículo confirmado.",
           systems: ["TMS", "Transportista"],
           sourceIds: ["cltd", "x204"],
           checkpoint: "¿Es lo mismo planear una carga que tenerla aceptada?"
@@ -484,7 +504,7 @@ window.SCKB_CONTENT = {
     {
       id: "master-data",
       title: "Datos compartidos",
-      subtitle: "El idioma común",
+      subtitle: "Identificadores y reglas compartidas",
       description: "Artículo, unidad de medida, ubicación, socio, lote y estado deben significar lo mismo entre sistemas. GTIN, GLN y SSCC son identificadores GS1 cuando se adoptan; un ID interno también puede existir.",
       examples: ["12 lámparas ≠ 12 cajas", "Una ubicación de almacén ≠ dirección de entrega"],
       sourceIds: ["gs1Keys", "gs1Systems"]
@@ -532,7 +552,7 @@ window.SCKB_CONTENT = {
     {
       id: "capture",
       title: "Captura física",
-      subtitle: "Unir pantalla y realidad",
+      subtitle: "Registrar movimientos físicos",
       description: "Escáneres, terminales RF, etiquetas o automatización registran qué se manipuló y dónde. La tecnología exacta depende de volumen, proceso y costo.",
       examples: ["GTIN para el artículo", "SSCC para la unidad logística", "Escaneo de ubicación"],
       sourceIds: ["gs1Systems", "gs1Label", "gs1Keys"]
@@ -540,7 +560,7 @@ window.SCKB_CONTENT = {
     {
       id: "analytics",
       title: "Datos y análisis",
-      subtitle: "Explicar lo que pasó",
+      subtitle: "Medición y conciliación",
       description: "Los registros de órdenes, stock y transporte alimentan conciliaciones, trazabilidad y métricas. Un tablero es tan confiable como sus definiciones y eventos de origen.",
       examples: ["Pedido completo y a tiempo", "Exactitud de inventario", "Desvío de flete"],
       sourceIds: ["scor", "gs1Systems", "epcis"]
@@ -655,14 +675,245 @@ window.SCKB_CONTENT = {
     },
     {
       question: "¿Por qué importan tanto los datos maestros y los eventos?",
-      answer: "Los datos maestros dicen qué es un artículo, una unidad o una ubicación. Los eventos dicen qué ocurrió y cuándo. Si alguno falla, inventario, promesa, trazabilidad y flete pueden contar historias distintas.",
+      answer: "Los datos maestros definen artículos, unidades y ubicaciones. Los eventos registran qué ocurrió y cuándo. Si alguno falla, inventario, promesa, trazabilidad y flete pueden mostrar resultados incompatibles.",
       example: "Doce «cajas» cargadas como doce «unidades» alteran la promesa; un escaneo de salida faltante deja el envío sin evidencia.",
       sourceIds: ["gs1Keys", "epcis", "gs1Systems"]
     }
   ],
 
+  runtimeGame: {
+    scenario: {
+      title: "Turno de almacén: 12 lámparas para una tienda",
+      summary: "Un proveedor anuncia cuatro cajas de LMP-42. Dos pedidos esperan preparación para Tienda Centro. Valida los datos, recibe la mercancía y confirma qué sale.",
+      footnote: "Ejercicio ficticio; no registra transacciones reales. Reglas, equipos y documentos varían por operación."
+    },
+    stages: [
+      {
+        id: "master",
+        phase: "Preparación",
+        title: "Datos maestros del artículo",
+        brief: "El WMS necesita identificar el artículo y convertir cajas a unidades.",
+        task: "¿Qué dato maestro habilita la lectura correcta del ASN?",
+        evidence: ["SKU: LMP-42", "Unidad base: EA (unidad)", "1 caja = 6 EA"],
+        choices: [
+          { label: "Registrar 1 caja como 1 EA.", correct: false, feedback: "Esa conversión reduciría cuatro cajas a cuatro unidades y distorsionaría recibo y pedidos." },
+          { label: "Guardar LMP-42 con EA como base y 6 EA por caja.", correct: true, feedback: "La conversión permite interpretar correctamente las cajas del ASN." },
+          { label: "Aceptar el ASN antes de identificar el SKU.", correct: false, feedback: "Falta el identificador y la conversión para validar sus cantidades." }
+        ],
+        success: "LMP-42 listo · 1 caja = 6 EA.",
+        event: "ITEM_MASTER_READY · LMP-42 · 1 caja = 6 EA",
+        caveat: "Los atributos requeridos dependen del producto y la operación.",
+        sourceIds: ["gs1Delivery", "gs1Keys"]
+      },
+      {
+        id: "asn",
+        phase: "Entrada",
+        title: "Procesar ASN",
+        brief: "El aviso anticipa lo que el proveedor afirma haber enviado; aún no acredita recibo físico.",
+        task: "¿Cómo registras el ASN de cuatro cajas?",
+        evidence: ["ASN: 4 cajas LMP-42", "Conversión: 6 EA/caja", "Esperadas: 24 EA; recibidas: 0"],
+        choices: [
+          { label: "Validar 24 EA esperadas y dejar el recibo pendiente.", correct: true, feedback: "El ASN fija la cantidad esperada; el stock disponible sigue en cero." },
+          { label: "Agregar 24 EA disponibles de inmediato.", correct: false, feedback: "El ASN es información anticipada; falta confirmar mercancía física y condición." },
+          { label: "Cambiar cuatro cajas por cuatro EA.", correct: false, feedback: "Contradice el item master, que define seis EA por caja." }
+        ],
+        success: "ASN validado · 24 EA esperadas; 0 recibidas.",
+        event: "ASN_VALIDATED · 4 cajas · 24 EA esperadas",
+        caveat: "El ASN puede viajar por EDI u otra integración; algunas operaciones reciben contra una orden sin ASN.",
+        sourceIds: ["gs1Delivery", "x856", "gs1Label"]
+      },
+      {
+        id: "order",
+        phase: "Demanda",
+        title: "Procesar pedidos",
+        brief: "Dos pedidos para la misma tienda solicitan 7 y 5 EA. La demanda se registra antes de asignar stock.",
+        task: "¿Qué estado deben tener antes del recibo?",
+        evidence: ["ORD-07: 7 EA", "ORD-05: 5 EA", "Destino común: Tienda Centro"],
+        choices: [
+          { label: "Declarar ambos pedidos surtidos.", correct: false, feedback: "Surtir requiere inventario elegible y confirmaciones físicas posteriores." },
+          { label: "Reservar las 24 EA anunciadas por ASN.", correct: false, feedback: "El aviso no demuestra que haya 24 EA aptas en el almacén." },
+          { label: "Registrar demanda total de 12 EA, pendiente de inventario elegible.", correct: true, feedback: "Los pedidos quedan pendientes; el ASN no equivale a stock asignable." }
+        ],
+        success: "Pedidos aceptados · 12 EA pendientes.",
+        event: "ORDERS_ACCEPTED · ORD-07=7 · ORD-05=5 · pendiente",
+        caveat: "La promesa y la reserva pueden ocurrir en sistemas y momentos distintos; aquí se separan para estudiar el flujo.",
+        sourceIds: ["scor", "gs1Delivery", "x940"]
+      },
+      {
+        id: "receiving",
+        phase: "Entrada",
+        title: "Recibir y ubicar",
+        brief: "Se cuentan 24 EA físicas. Una está dañada y requiere segregación.",
+        task: "¿Qué resultado de recibo conservas?",
+        evidence: ["ASN: 24 EA esperadas", "Conteo: 24 EA físicas", "Daño: 1 EA → cuarentena", "Reserva: ubicación R-01"],
+        choices: [
+          { label: "Poner las 24 EA disponibles porque coinciden con el ASN.", correct: false, feedback: "Una unidad dañada no debe entrar al stock elegible para estos pedidos." },
+          { label: "Registrar 24 recibidas; 1 en cuarentena y 23 aptas ubicadas en R-01.", correct: true, feedback: "La unidad dañada queda trazada; las 23 aptas se confirman en R-01." },
+          { label: "Registrar solo 23 recibidas y borrar la unidad dañada.", correct: false, feedback: "La unidad dañada llegó físicamente y debe seguir siendo trazable en cuarentena." }
+        ],
+        success: "24 recibidas · 1 en cuarentena · 23 aptas en R-01.",
+        event: "RECEIPT_POSTED · físico=24 · cuarentena=1 · R-01=23 aptas",
+        caveat: "La disposición de daño depende de reglas de calidad; el juego no decide si se devuelve, repara o descarta.",
+        sourceIds: ["gs1Delivery", "gs1Label", "epcis"]
+      },
+      {
+        id: "wave",
+        phase: "Salida",
+        title: "Liberar ola",
+        brief: "Una ola reúne demanda elegible y crea asignaciones y tareas para preparar pedidos.",
+        task: "¿Cuánto debe liberar la ola para estos dos pedidos?",
+        evidence: ["Stock elegible: 23 EA", "ORD-07 + ORD-05: 12 EA", "Cuarentena: 1 EA no asignable"],
+        choices: [
+          { label: "Asignar 12 EA y crear tareas por pedido; quedan 11 EA elegibles.", correct: true, feedback: "La ola asigna solo la demanda elegible; el resto queda en reserva." },
+          { label: "Asignar las 24 EA del ASN.", correct: false, feedback: "El ASN no es stock; solo 23 EA son elegibles y la demanda es 12." },
+          { label: "Asignar 23 EA porque todas están aptas.", correct: false, feedback: "La ola atiende 12 EA de demanda, no todo el stock disponible." }
+        ],
+        success: "Ola liberada · 12 asignadas · 11 en reserva.",
+        event: "WAVE_RELEASED · asignadas=12 · remanente=11",
+        caveat: "Las olas son una estrategia, no un requisito universal; también existe asignación directa o continua.",
+        sourceIds: ["cltd", "gs1Systems"]
+      },
+      {
+        id: "picking",
+        phase: "Salida",
+        title: "Confirmar picking",
+        brief: "El operador debe confirmar lo que tomó físicamente para las tareas liberadas.",
+        task: "¿Qué confirma el picking de esta ola?",
+        evidence: ["Tareas: 7 EA para ORD-07 y 5 para ORD-05", "Ubicación elegible: R-01", "Total solicitado: 12 EA"],
+        choices: [
+          { label: "Confirmar las 24 EA del ASN como pickeadas.", correct: false, feedback: "El ASN describe entrada; el pick debe seguir las tareas y cantidad física tomada." },
+          { label: "Cerrar tareas sin escanear o verificar unidades.", correct: false, feedback: "Falta evidencia de ejecución para pasar a clasificación." },
+          { label: "Tomar y confirmar 7 + 5 EA; quedan 11 EA elegibles en R-01.", correct: true, feedback: "La confirmación física mantiene la cantidad de cada pedido." }
+        ],
+        success: "12 tomadas · 11 EA en reserva.",
+        event: "PICK_CONFIRMED · ORD-07=7 · ORD-05=5",
+        caveat: "Picking por unidad, caja o pallet y sus escaneos dependen del diseño operativo.",
+        sourceIds: ["cltd", "gs1Systems"]
+      },
+      {
+        id: "sortation",
+        phase: "Salida",
+        title: "Clasificar con MHE",
+        brief: "Un sorter desvía las unidades a dos carriles de trabajo y confirma cuántas llegaron a cada uno.",
+        task: "¿Qué señal permite continuar?",
+        evidence: ["Entrada al MHE: 12 EA", "Carril A → estación ORD-07: 7 EA", "Carril B → estación ORD-05: 5 EA"],
+        choices: [
+          { label: "Un acuse de recepción del mensaje, sin conteo físico.", correct: false, feedback: "El ACK solo acredita el mensaje; no prueba que 7 y 5 EA llegaron a los carriles." },
+          { label: "Confirmar físicamente 7 EA en A y 5 EA en B.", correct: true, feedback: "El conteo confirma el desvío a ambas estaciones de trabajo." },
+          { label: "Enviar las 12 EA al carril A.", correct: false, feedback: "ORD-05 quedaría sin sus cinco unidades separadas." }
+        ],
+        success: "Carril A: 7 EA · Carril B: 5 EA.",
+        event: "SORT_CONFIRMED · A=7 · B=5",
+        caveat: "MHE es opcional; el mismo control puede realizarse manualmente. Los mensajes dependen de cada integración.",
+        sourceIds: ["oracleAutomation", "cltd"]
+      },
+      {
+        id: "putlight",
+        phase: "Salida",
+        title: "Distribuir con put-to-light",
+        brief: "En cada estación, una luz señala el compartimento final del pedido; el operador deposita y confirma.",
+        task: "¿Qué confirma el depósito final de cada pedido?",
+        evidence: ["Compartimento iluminado ORD-07: 7 EA", "Compartimento iluminado ORD-05: 5 EA", "Desde los carriles MHE: 12 EA"],
+        choices: [
+          { label: "Depositar y confirmar 7 EA para ORD-07 y 5 para ORD-05.", correct: true, feedback: "La luz guía cada depósito; la confirmación cierra los compartimentos." },
+          { label: "Tomar la luz encendida como confirmación automática.", correct: false, feedback: "La instrucción visual no sustituye el depósito y su confirmación." },
+          { label: "Mezclar 12 EA en un único destino porque la tienda es la misma.", correct: false, feedback: "Se perdería el vínculo de cantidad con cada pedido." }
+        ],
+        success: "Compartimento ORD-07: 7 EA · ORD-05: 5 EA.",
+        event: "PUT_CONFIRMED · ORD-07=7 · ORD-05=5",
+        caveat: "Put-to-light es opcional y distinto de pick-to-light; aquí distribuye mercancía ya tomada.",
+        sourceIds: ["oracleAutomation", "cltd"]
+      },
+      {
+        id: "staging",
+        phase: "Despacho",
+        title: "Empacar y llevar a staging",
+        brief: "Se etiquetan tres cartones y se mueven a una posición de salida para la misma tienda.",
+        task: "¿Qué cartones mueves a ST-01?",
+        evidence: ["ORD-07 → C-01: 4 EA + C-02: 3 EA", "ORD-05 → C-03: 5 EA", "Carril de salida: ST-01"],
+        choices: [
+          { label: "Dos cartones sin desglose por pedido.", correct: false, feedback: "Este caso usa tres cartones identificados y debe conservar su relación con cada orden." },
+          { label: "Cuatro cajas del ASN con 24 EA.", correct: false, feedback: "Staging de salida contiene las 12 EA pickeadas, no todo el recibo." },
+          { label: "Etiquetar C-01=4, C-02=3, C-03=5 y confirmar los tres en ST-01.", correct: true, feedback: "Cada cartón conserva su pedido y queda localizado en ST-01." }
+        ],
+        success: "3 cartones · 12 EA en ST-01.",
+        event: "STAGED · C-01=4 · C-02=3 · C-03=5 · ST-01",
+        caveat: "La secuencia de empaque depende del proceso de picking.",
+        sourceIds: ["gs1Label", "cltd", "epcis"]
+      },
+      {
+        id: "nesting",
+        phase: "Despacho",
+        title: "Anidar cartones en pallet",
+        brief: "Se crea una relación padre-hijo para mover tres cartones como una unidad logística.",
+        task: "¿Qué relación conserva el contenido real?",
+        evidence: ["Pallet padre: P-01", "Hijos: C-01 (4), C-02 (3), C-03 (5)", "Total contenido: 12 EA"],
+        choices: [
+          { label: "P-01 contiene cuatro cajas y 24 EA del ASN.", correct: false, feedback: "Ese total describe la entrada; el pallet saliente tiene tres cartones y 12 EA." },
+          { label: "Anidar los tres cartones bajo P-01 sin borrar sus IDs ni sus pedidos.", correct: true, feedback: "La relación padre-hijo conserva cada cartón y su pedido." },
+          { label: "Sustituir los IDs de los cartones por P-01 y perder el detalle.", correct: false, feedback: "El vínculo padre-hijo requiere conservar la identidad de cada cartón." }
+        ],
+        success: "P-01 contiene 3 cartones · 12 EA.",
+        event: "NESTED · P-01 ← C-01,C-02,C-03 · 12 EA",
+        caveat: "El pallet y la jerarquía padre-hijo son opcionales; GS1 describe agregaciones de unidades logísticas cuando se usan.",
+        sourceIds: ["epcis", "gs1Label"]
+      },
+      {
+        id: "consolidation",
+        phase: "Despacho",
+        title: "Consolidar pedidos",
+        brief: "Los dos pedidos van a la misma tienda y pueden compartir un envío sin perder su identidad.",
+        task: "¿Cómo consolidas el pallet para esta salida?",
+        evidence: ["ORD-07: 7 EA en dos cartones", "ORD-05: 5 EA en un cartón", "P-01: 3 cartones, 12 EA"],
+        choices: [
+          { label: "Asignar P-01 a un envío/carga L-01 y mantener ambas órdenes vinculadas.", correct: true, feedback: "La carga agrupa ambos pedidos sin fusionarlos." },
+          { label: "Fusionar ORD-07 y ORD-05 en una orden nueva sin detalle original.", correct: false, feedback: "Compartir carga no obliga a borrar la trazabilidad de las órdenes." },
+          { label: "Sumar la unidad en cuarentena para completar el pallet.", correct: false, feedback: "La unidad dañada sigue segregada y nunca se asignó al envío." }
+        ],
+        success: "L-01 incluye P-01 y 2 pedidos; carga pendiente.",
+        event: "LOAD_PLANNED · L-01 · P-01 · ORD-07+ORD-05",
+        caveat: "La consolidación depende de destino, servicio y capacidad.",
+        sourceIds: ["gs1Label", "cltd", "epcis"]
+      },
+      {
+        id: "load",
+        phase: "Despacho",
+        title: "Confirmar carga",
+        brief: "La carga planeada solo se vuelve cargada cuando se confirma la unidad logística real.",
+        task: "¿Qué acción acredita la carga física?",
+        evidence: ["Carga L-01 espera P-01", "P-01 contiene 3 cartones y 12 EA", "Vehículo en muelle de salida"],
+        choices: [
+          { label: "Generar BOL desde el ASN sin escanear el pallet.", correct: false, feedback: "El ASN era entrada prevista y no acredita qué salió en el vehículo." },
+          { label: "Marcar L-01 como cargada porque P-01 estaba en staging.", correct: false, feedback: "Staging no confirma entrada física al vehículo." },
+          { label: "Escanear y confirmar P-01 dentro de L-01; verificar 3 cartones y 12 EA.", correct: true, feedback: "El escaneo confirma el paso al vehículo; el cierre del envío se registra aparte." }
+        ],
+        success: "L-01 cargada · P-01 · 12 EA.",
+        event: "LOAD_CONFIRMED · L-01 · P-01 · 3 cartones · 12 EA",
+        caveat: "Confirmación de carga, cierre de carga, ship confirm y entrega al transportista son eventos distintos según operación.",
+        sourceIds: ["gs1Label", "epcis", "x945"]
+      },
+      {
+        id: "bol",
+        phase: "Despacho",
+        title: "Preparar BOL",
+        brief: "El borrador de bill of lading (BOL) resume la carga confirmada, no el ASN de entrada.",
+        task: "¿Qué debe mostrar el borrador de BOL?",
+        evidence: ["Remitente → Tienda Centro", "L-01 cargada: P-01", "Contenido: 3 cartones, 12 EA"],
+        choices: [
+          { label: "4 cajas y 24 EA, tomadas del ASN de entrada.", correct: false, feedback: "El ASN de proveedor no describe la carga de salida confirmada." },
+          { label: "1 pallet, 3 cartones, 12 EA, origen/destino y carga L-01.", correct: true, feedback: "El borrador coincide con la carga; firma y traspaso al transportista quedan aparte." },
+          { label: "23 EA aptas y 1 dañada porque ese fue el recibo.", correct: false, feedback: "El BOL debe resumir la mercancía cargada, no el inventario de entrada." }
+        ],
+        success: "Borrador de BOL · 1 pallet · 3 cartones · 12 EA.",
+        event: "BOL_DRAFTED · L-01 · 1 pallet · 3 cartones · 12 EA",
+        caveat: "Es un resumen educativo, no un BOL legal emitido. Formato, términos, firma y obligación dependen de modo, transportista y jurisdicción.",
+        sourceIds: ["usBol", "gs1Label"]
+      }
+    ]
+  },
+
   warehouseLayout: {
-    intro: "Plano conceptual, no edificio real. Selecciona la siguiente zona para seguir una ruta de lámparas ficticias. La disposición física, la automatización y los controles cambian por operación; cross-dock y cuarentena solo se usan cuando corresponden.",
+    intro: "Plano conceptual. Zonas y controles cambian por instalación; cross-dock y cuarentena son condicionales.",
     zones: [
       {
         id: "inbound-dock",
