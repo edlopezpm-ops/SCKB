@@ -40,4 +40,10 @@ When changing a claim, update both languages and their `sourceIds`, check the pr
 
 GitHub Pages serves the root of `main`; `.nojekyll` allows the static files to be served directly.
 
+## Privacy and data
+
+The persistent **Privacy and data** control works in English and Spanish. Optional usage is off by default; an independent structured survey is saved locally. Withdrawal, retention and real JSON downloads are available. There is no central receiver or automatic sending. Rejection preserves every educational module. [Catalogue, limits and verification](docs/COLLECT_SECURITY.md).
+
+Run `node tools/privacy-test.mjs` with Node 24+ and Edge or Chrome to exercise the controls with local fixtures and real downloads. It sends no data to the published site.
+
 Built with AEKR · Prepared by Codex for edlopezpm-ops.

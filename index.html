@@ -2,6 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#101f2d">
     <meta name="description" content="Un atlas interactivo, visual y agnóstico para entender la cadena de suministro, el WMS, el TMS y los sistemas que los conectan." data-i18n-content="meta.description">
@@ -13,6 +14,8 @@
     <script defer src="./i18n.js"></script>
     <script defer src="./app.js"></script>
     <script defer src="./runtime.js"></script>
+    <script defer src="./local-privacy.js"></script>
+    <script defer src="./privacy.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip">Ir al contenido</a>

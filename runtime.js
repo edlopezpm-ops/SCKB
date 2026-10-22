@@ -100,7 +100,8 @@
   const appendText = (parent, tag, className, value) => parent.append(make(tag, className, value));
   const readProgress = () => {
     try {
-      const value = JSON.parse(localStorage.getItem(storageKey) || "null");
+      const raw = localStorage.getItem(storageKey) || "null";
+      const value = raw.length < 1000 ? JSON.parse(raw) : null;
       return value?.version === 1 && Number.isInteger(value.completed) &&
         value.completed >= 0 && value.completed <= total ? value : { completed: 0, viewIndex: 0 };
     } catch {
@@ -115,6 +116,7 @@
   let wrongChoice = -1;
   const persist = () => {
     try { localStorage.setItem(storageKey, JSON.stringify({ version: 1, completed, viewIndex })); } catch { /* Private browsing may block storage. */ }
+    window.dispatchEvent(new Event("sckb:productdatachange"));
   };
 
   const setScenario = () => {
@@ -367,6 +369,20 @@
 
   setScenario();
   render();
+  window.SCKB_LOCAL_DATA = {
+    snapshot: () => ({ runtime: { version: 1, completed, viewIndex }, scenario: "fictional educational simulation" }),
+    hasData: () => { try { return localStorage.getItem(storageKey) !== null; } catch { return false; } },
+    clear: () => {
+      completed = 0; viewIndex = 0; message = null; wrongChoice = -1;
+      let cleared = true;
+      try { localStorage.removeItem(storageKey); } catch { cleared = false; }
+      render();
+      return cleared;
+    }
+  };
+  window.addEventListener("storage", event => {
+    if ((event.key === storageKey && event.newValue === null) || event.key === null) window.SCKB_LOCAL_DATA.clear();
+  });
   const restoreRuntimeAnchor = () => {
     if (window.location.hash === "#runtime") {
       const root = document.documentElement;
