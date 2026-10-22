@@ -42,4 +42,10 @@ Al cambiar una afirmación, actualiza ambos idiomas y sus `sourceIds`, revisa la
 
 GitHub Pages publica la raíz de `main`; `.nojekyll` permite servir los archivos estáticos directamente.
 
+## Privacidad y datos
+
+El control persistente **Privacidad y datos** funciona en ES/EN. Uso opcional desactivado por defecto, encuesta estructurada independiente guardada localmente, retiro, conservación y descargas JSON reales. No existe receptor central ni envío automático. Rechazar conserva todos los módulos educativos. [Catálogo, límites y verificación](docs/COLLECT_SECURITY.md).
+
+Ejecuta `node tools/privacy-test.mjs` con Node 24+ y Edge o Chrome para probar los controles con fixtures locales y descargas reales. No envía datos al sitio publicado.
+
 Construido con AEKR · Preparado por Codex para edlopezpm-ops.
