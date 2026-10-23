@@ -1,5 +1,11 @@
 # SCKB: Collect and Security implementation
 
+## Quota-denial correction candidate — 2026-10-22
+
+Based on canonical main `36ea51060f3a9b80274d1cd1641ca3addff55ea6`. A failed consent replacement could leave a previously accepted choice on disk, so a fresh page resumed optional usage after rejection. A failed write of this product's choice now immediately calls the existing scoped removal and verifies absence with readback. It never clears origin storage or product data, retention, preferences or another product's keys. If removal cannot be confirmed, the existing storage-failure latch keeps optional event recording off in that module; the browser must allow deletion to persist the change across reloads. No remote grant or receiver exists.
+
+The new browser regression failed on canonical source at the fresh-module assertion. All 27 real Edge privacy checks now pass, including nine combinations of reject/configure/withdraw with choice-only quota, all-write quota and silent unconfirmed writes. Each uses legitimate acceptance, a fresh module, preserved essential/retention/foreign records, no optional event after recovery, then a new explicit opt-in that alone restores counts. Existing GPC/DNT, research withdrawal floor, retention, closed exports, blocked storage and cross-tab checks remain green. ES/EN source keys, IDs and source references plus all seven JavaScript syntax checks pass. Gitleaks 8.30.1 diff scan and `git diff --check` pass. The independently copied SCKB/One-Day source bytes match SHA-256 `eb8db11ad845d45fc921b9506d8852441a9ee84aec6c8306bbd05ad9005f9e9f` (LF). Candidate review, Git delivery and hosted observation remain separate pending steps.
+
 Date: 2026-10-22. State: tested local candidate, publication and independent review pending. Source baseline `146afe314469234d9fb21d516c0240f5108b52ed`. Current Pages metadata identifies `https://edlopezpm-ops.github.io/SCKB/` with `main` root publication and HTTPS enforced. Metadata does not establish candidate deployment. No provider configuration, visibility, billing or public runtime was changed by this implementation.
 
 ## Real capabilities and proportionality
