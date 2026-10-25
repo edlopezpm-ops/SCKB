@@ -5,7 +5,7 @@
   const option = (value, en, spanish) => [value, t(en, spanish)];
   const skip = option("unspecified", "Prefer not to answer", "Prefiero no responder");
   const privacy = window.createAEKRLocalPrivacy({
-    id: "sckb", product: "SCKB", lang: es ? "es" : "en", defaultRetention: 90,
+    id: "sckb", product: "SCKB", lang: es ? "es" : "en", defaultRetention: 90, entryMount: ".footer-credit",
     dataDescription: t("The export contains the current fictional runtime progress, plus the local optional records and choices listed in its manifest. Educational progress expires after 90 days of inactivity by default. No real warehouse or customer data is requested.", "La exportación incluye el progreso actual de la simulación ficticia y los registros opcionales y opciones que declara el manifiesto. El progreso vence tras 90 días de inactividad por defecto. No se solicitan datos reales del almacén ni de clientes."),
     features: ["journey", "runtime", "layout", "architecture"],
     snapshot: () => window.SCKB_LOCAL_DATA.snapshot(),

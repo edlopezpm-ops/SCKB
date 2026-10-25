@@ -14,6 +14,7 @@
     <script defer src="./i18n.js"></script>
     <script defer src="./app.js"></script>
     <script defer src="./runtime.js"></script>
+    <script defer src="./local-policies.js"></script>
     <script defer src="./local-privacy.js"></script>
     <script defer src="./privacy.js"></script>
   </head>
@@ -37,8 +38,7 @@
         </nav>
         <a class="header-cta" href="#mapa"><span data-i18n="nav.explore">Explorar</span> <span aria-hidden="true">↗</span></a>
         <nav class="language-switch" aria-label="Idioma del sitio" data-i18n-aria-label="language.group">
-          <a href="?lang=es" data-lang-target="es" lang="es" hreflang="es" aria-label="Español">ES</a>
-          <a href="?lang=en" data-lang-target="en" lang="en" hreflang="en" aria-label="English">EN</a>
+          <button type="button" id="language-toggle" aria-label="Idioma actual español; cambiar a inglés">ES → EN</button>
         </nav>
       </div>
     </header>

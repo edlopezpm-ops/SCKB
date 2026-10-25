@@ -115,6 +115,7 @@
   let message = null;
   let wrongChoice = -1;
   const persist = () => {
+    if (!window.AEKR_POLICY?.ensure()) return;
     try { localStorage.setItem(storageKey, JSON.stringify({ version: 1, completed, viewIndex })); } catch { /* Private browsing may block storage. */ }
     window.dispatchEvent(new Event("sckb:productdatachange"));
   };
@@ -324,6 +325,7 @@
   };
 
   const choose = (index) => {
+    if (!window.AEKR_POLICY?.ensure()) return;
     if (viewIndex !== completed) return;
     const stage = game.stages[viewIndex];
     const choice = stage.choices[index];
@@ -344,6 +346,7 @@
   };
 
   el["runtime-next"].addEventListener("click", () => {
+    if (!window.AEKR_POLICY?.ensure()) return;
     if (viewIndex >= completed) return;
     if (completed === total && viewIndex === total - 1) {
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -358,6 +361,7 @@
     el["runtime-stage"].focus();
   });
   el["runtime-reset"].addEventListener("click", () => {
+    if (!window.AEKR_POLICY?.ensure()) return;
     completed = 0;
     viewIndex = 0;
     message = { stageId: game.stages[0].id, kind: "correct", text: ui.resetMessage };
