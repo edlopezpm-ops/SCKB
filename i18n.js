@@ -161,22 +161,15 @@
     }
   }
 
-  function updateLanguageLinks() {
-    for (const link of document.querySelectorAll('[data-lang-target]')) {
-      const target = link.dataset.langTarget;
-      const url = new URL(window.location.href);
-      url.searchParams.set('lang', target);
-      link.href = `${url.pathname}${url.search}${url.hash}`;
-      if (target === language) link.setAttribute('aria-current', 'true');
-      else link.removeAttribute('aria-current');
-    }
-  }
-
-  updateLanguageLinks();
-  window.addEventListener('hashchange', updateLanguageLinks);
-  window.addEventListener('popstate', updateLanguageLinks);
-  window.addEventListener('sckb:locationchange', updateLanguageLinks);
-  for (const link of document.querySelectorAll('[data-lang-target]')) {
-    link.addEventListener('click', updateLanguageLinks);
-  }
+  const toggle = document.getElementById('language-toggle');
+  toggle.textContent = language === 'en' ? 'EN \u2192 ES' : 'ES \u2192 EN';
+  toggle.setAttribute('aria-label', language === 'en' ? 'Current language English; switch to Spanish' : 'Idioma actual espa\u00f1ol; cambiar a ingl\u00e9s');
+  toggle.addEventListener('click', () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', language === 'en' ? 'es' : 'en');
+    const open = document.querySelector('dialog[open]');
+    const policy = { 'terms-dialog': 'terms', 'privacy-dialog': 'privacy', 'cookies-dialog': 'cookies', 'policy-ack-dialog': 'ack' }[open?.id];
+    if (policy) url.searchParams.set('policy', policy); else url.searchParams.delete('policy');
+    window.location.assign(url.pathname + url.search + url.hash);
+  });
 })();

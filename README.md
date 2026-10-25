@@ -49,3 +49,7 @@ El control persistente **Privacidad y datos** funciona en ES/EN. Uso opcional de
 Ejecuta `node tools/privacy-test.mjs` con Node 24+ y Edge o Chrome para probar los controles con fixtures locales y descargas reales. No envía datos al sitio publicado.
 
 Construido con AEKR · Preparado por Codex para edlopezpm-ops.
+
+## Web policies
+
+The existing AEKR footer groups ToS, Privacy and Cookies. Interactive use requests a separate explicit, browser-local policy declaration; Privacy exports and optional choices remain accessible before accepting new Terms. [Scope and verification](docs/WEB_POLICIES_2026-10-25.md).
